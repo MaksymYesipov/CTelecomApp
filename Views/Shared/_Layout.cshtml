@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>@ViewBag.Title</title>
+    
+</head>
+<body>
+    @{ string tariffs = "", packs = "", cabinet = "", services = "";
+        if (ViewBag.Title != null) {
+            if (ViewBag.Title.Equals("Tariffs"))
+            {
+                tariffs = "active";
+            } else if (ViewBag.Title.Equals("SP"))
+            {
+                packs = "active";
+            } else if (ViewBag.Title.Equals("Cabinet"))
+            {
+                cabinet = "active";
+            } else if (ViewBag.Title.Equals("Services"))
+            {
+                services = "active";
+            }
+        }
+    }
+    <nav class="nav">
+        <a class="nav-link disabled" href="#" aria-disabled="true">CT.com</a>
+        <li class="nav-item dropdown">
+        </li>
+        <a class="flex-sm-fill nav-link" href="#"></a>
+        @{ if (Session["user"] == null)
+            {
+                <a class="nav-link" href="/User/AutoLogin" tabindex="-1" aria-disabled="true">Log in</a>
+
+            }
+            else
+            {
+                if (Session["role"] == null)
+                {
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Your balance is $ @Session["balance"]</a>
+                }
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Signed in as @Session["user"]</a>
+                <a class="nav-link" href="/User/LogOut" tabindex="-1" aria-disabled="true">Log out</a>
+
+            }
+
+        }
+    </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="navbar-nav">
+            @if (Session["user"] == null || Session["user"].Equals(""))
+            { // for anonymous
+                <a class="nav-item nav-link @tariffs" href="/Home/Tariffs">Tariff plans</a>
+                <a class="nav-item nav-link @services" href="/Home/Services">Services</a>
+                <a class="nav-item nav-link @packs" href="/Home/Index">Starter packs</a>
+                <a class="nav-item nav-link @cabinet" href="/Home/Login">My CT</a>
+            }
+            else if (Session["role"] != null && Session["role"].Equals("manager"))
+            { // for manager
+                <a class="nav-item nav-link active" href="/Admin/Orders">Orders</a>
+            }
+            else
+            { //for user
+                <a class="nav-item nav-link @tariffs" href="/Home/Tariffs">Tariff plans</a>
+                <a class="nav-item nav-link @services" href="/Home/Services">Services</a>
+                <a class="nav-item nav-link @packs" href="/Home/Index">Starter packs</a>
+                <a class="nav-item nav-link @cabinet" href="/Home/Cabinet">My CT</a>
+            }
+        </div>
+    </nav>
+    @RenderBody()
+    <hr />
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-copyright text-muted">&copy; @DateTime.Now.Year - CT.com</p>
+        </div>
+    </footer>
+
+    
+    @RenderSection("scripts", required: false)
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+</body>
+</html>

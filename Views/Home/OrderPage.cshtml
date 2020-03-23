@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Order";
+}
+
+    <div class="container col-4">
+        <form action="/Home/OrderAnon" method="post">
+            <input type="hidden" name="id" value="@ViewBag.Id" />
+            <div class="form-group">
+                <label for="exampleInputEmail1">Phone</label>
+                <input type="tel" name="Phone" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <small id="emailHelp" class="form-text text-muted">Write your phone for callback</small>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Name</label>
+                <input class="form-control" id="exampleInputPassword1" name="Name">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+

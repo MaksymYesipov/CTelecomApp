@@ -1,0 +1,48 @@
+﻿@using CTelecomApp.Models
+
+@model List<Services>
+@{
+    ViewBag.Title = "Cabinet";
+}
+
+<div class="container col-6 mt-md-3">
+    @{var tariffImagePath = "/Content/img/tariff_" + ViewBag.Tariff.TariffId + ".png";}
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img src="@tariffImagePath" class="card-img" alt="tariff image">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Your tariff is @ViewBag.Tariff.TariffName</h5>
+                    <p class="card-text">@ViewBag.Tariff.Description</p>
+                    <table class="table table-striped">
+                        <tr><td>Minutes: </td><td>@ViewBag.Tariff.MinutesPackage</td></tr>
+                        <tr><td>SMS: </td><td>@ViewBag.Tariff.SmsPackage</td></tr>
+                        <tr><td>Internet: </td><td>@ViewBag.Tariff.TrafficPackage MB</td></tr>
+                        <tr><td>Price: </td><td>$@ViewBag.Tariff.Price / @ViewBag.Tariff.Term days</td></tr>
+                    </table>
+                </div>
+            </div>
+            <a href="/Home/Tariffs" class="btn btn-md btn-dark mx-md-2 my-md-2">Change</a>
+        </div>
+    </div>
+</div>
+
+<div class="container col-8">
+    <div class="list-group">
+        @foreach (Services service in Model)
+        {
+        <div class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">@service.ServiceName</h5>
+                <small>$@service.Price / @service.Term days</small>
+            </div>
+            <p class="mb-1">@service.Description</p>
+            <a href="/Home/DisableService?id=@service.ServiceId" type="button" class="btn btn-dark">Disable</a>
+            <small>It will be active till the paid term ends</small>
+        </div>
+        }
+    </div>
+</div>
+

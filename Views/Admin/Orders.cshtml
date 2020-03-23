@@ -1,0 +1,63 @@
+﻿@using CTelecomApp.Models
+@model OrdersBean
+
+@{
+    ViewBag.Title = "Orders";
+}
+
+    <div class="container col-12 my-md-3">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Client name</th>
+                    <th scope="col">Client phone</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Item</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int i = 0;
+                    string badgeClass;} 
+                @foreach (Orders order in Model.Orders)
+                {
+                    switch (order.StatusId)
+                                {
+                                    case 1:
+                                        badgeClass = "badge-secondary";
+                                        break;
+                                    case 2:
+                                        badgeClass = "badge-warning";
+                                        break;
+                                    case 3:
+                                        badgeClass = "badge-success";
+                                        break;
+                                    default:
+                                        badgeClass = "badge-danger";
+                                        break;
+                                }
+                    <tr>
+                        <th scope="row">@order.Id</th>
+                        <td>@order.ClientName</td>
+                        <td>@order.ClientPhone</td>
+                        <td><span class="badge @badgeClass">@Model.Statuses.ElementAt(i)</span></td>
+                        <td>@Model.Packages.ElementAt(i)</td>
+                        <td>
+                            @if (order.StatusId == 1)
+                            {
+                                <a href="/Admin/ProcessOrder?orderId=@order.Id&RequiredStatus=2" class="btn btn-sm btn-info">Take in work</a>
+                        }
+                            else if (order.StatusId == 2)
+                            {
+                                <a href="/Admin/ProcessOrder?orderId=@order.Id&RequiredStatus=3" class="btn btn-success">Complete</a>
+                                <a href="/Admin/ProcessOrder?orderId=@order.Id&RequiredStatus=4" class="btn btn-danger">Decline</a>
+                    }
+                        </td>
+                    </tr>
+                    i++;
+
+                }
+            </tbody>
+        </table>
+        </div>

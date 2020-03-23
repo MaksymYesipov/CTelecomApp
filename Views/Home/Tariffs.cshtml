@@ -1,0 +1,35 @@
+﻿@using CTelecomApp.Models
+
+@model IEnumerable<Tariffs>
+@{
+    ViewBag.Title = "Tariffs";
+}
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-@ViewBag.Status" role="alert">
+        @ViewBag.Message
+    </div>
+}
+
+    <div class="container col-6">
+        @foreach (var tariff in Model)
+        {
+            var imagePath = "/Content/img/tariff_" + tariff.TariffId + ".png";
+            var ChangeLink = Session["user"] != null ? "/Home/ChangeTariff?id=" + tariff.TariffId : "/Home/Login";
+            <div class="card my-md-3">
+                
+                    <img src="@imagePath" class="card-img-top" alt="@tariff.TariffName">
+                    <table class="table table-striped">
+                        <tr><td>Minutes</td><td>SMS</td><td>Internet</td><td>Price</td></tr>
+                        <tr><td>@tariff.MinutesPackage</td><td>@tariff.SmsPackage</td><td>@tariff.TrafficPackage MB</td><td>$@tariff.Price / @tariff.Term days</td></tr>
+                    </table>
+                
+                <div class="card-body">
+                    <h5 class="card-title">@tariff.TariffName</h5>
+                    <p class="card-text">@tariff.Description</p>
+                    <a href="@ChangeLink" class="btn btn-outline-dark">Change</a>
+                </div>
+            </div>
+        }
+    </div>
+

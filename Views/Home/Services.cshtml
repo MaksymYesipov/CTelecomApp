@@ -1,0 +1,30 @@
+﻿@using CTelecomApp.Models
+
+@model IEnumerable<Services>
+@{
+    ViewBag.Title = "Services";
+}
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-@ViewBag.Status" role="alert">
+        @ViewBag.Message
+    </div>
+}
+<div class="container col-8">
+    <div class="list-group">
+        @foreach (Services service in Model)
+        {
+            var buttonLink = Session["user"] != null ? "/Home/EnableService?id=" + service.ServiceId : "/Home/Login";
+            <div class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">@service.ServiceName</h5>
+                    <small>$@service.Price / @service.Term days</small>
+                </div>
+                <p class="mb-1">@service.Description</p>
+                <a href="@buttonLink" type="button" class="btn btn-dark">Enable</a>
+                <small>It will be active till the paid term ends</small>
+            </div>
+        }
+    </div>
+</div>
+

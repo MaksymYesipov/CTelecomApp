@@ -1,0 +1,21 @@
+﻿@using CTelecomApp.Models
+    <div class="container col-6">
+        @if (ViewBag.OrderMessage != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @ViewBag.OrderMessage
+            </div>
+        }
+        @foreach (var pack in ViewBag.Packs)
+        {
+            var imagePath = "/Content/img/pack_" + pack.PackId + ".png";
+            <div class="card my-md-3">
+                <img src="@imagePath" class="card-img-top" alt="@pack.PackName">
+                <div class="card-body">
+                    <h5 class="card-title">@pack.PackName</h5>
+                    <p class="card-text">@pack.Description</p>
+                    <a href="/Home/Order?id=@pack.PackId" class="btn btn-dark">Order</a>
+                </div>
+            </div>
+        }
+    </div> 
